@@ -1,14 +1,11 @@
-from flask import Flask
+import models
+from config import app
 
-
-app = Flask(__name__)
-
+# routes
 @app.route("/")
 def index():
 
 	return "Hello, it's work!"
-
-
 
 if __name__ == "__main__":
 	app.run(debug=True)
