@@ -1,4 +1,4 @@
-from main import db, app
+from config import db, app
 
 
 class Card(db.Model):
