@@ -3,12 +3,8 @@ from config import db, app
 
 class Card(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(10))
-	text = db.Column(db.Text)
+	word = db.Column(db.String(50), nullable=False)
+	context = db.Column(db.Text, nullable=False)
 
-	def __repr__(self):
-		return f"{name}"
-	
-	
-with app.app_context():
-	db.create_all()
+	def __str__(self):
+		return self.word
