@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+
+<h1>Create card</h1>
+<form method="POST" action="create_card">
+	<input type="text" name="word"><br>
+	<input type="text" name="context"><br>
+	<input type="submit" value="create">
+</form>
+
+{% endblock %}
