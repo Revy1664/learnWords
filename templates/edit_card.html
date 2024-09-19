@@ -5,9 +5,10 @@
 {% block content %}
 
 <h1>Edit</h1>
+
 <form method="POST">
-	<input type="text" name="word">
-	<input type="text" name="context">
+	<input type="text" name="word" value="{{ card.word }}"><br>
+	<textarea name="context" type="text">{{ card.context }}</textarea>
 	<input type="submit" value="edit">
 </form>
 

@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 # Loading environment variables
 load_dotenv()
 
-# Database variables
+# Getting database variables from environment
 username = os.environ.get("db_username")
 user_password = os.environ.get("password")
 host = os.environ.get("host")
