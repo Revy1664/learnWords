@@ -5,7 +5,7 @@ from flask_wtf.csrf import generate_csrf
 
 from config import app, db, bcrypt
 from models import Card, User
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, CardForm
 
 
 # ROUTES
@@ -20,10 +20,12 @@ def index():
 @login_required
 def create_card():
 
-    if request.method == "POST":
+    form = CardForm()
+
+    if request.method == "POST" and form.validate():
         # getting data from form
-        word = request.form.get("word")
-        context = request.form.get("context")
+        word = form.word.data
+        context = form.context.data
 
         # adding user to database
         new = Card(word=word, context=context)
@@ -33,7 +35,7 @@ def create_card():
         # redirecting to index
         return redirect("/", code=302)
 
-    return render_template("create_card.html")
+    return render_template("create_card.html", form=form)
 
 
 @app.route("/remove/<int:card_id>")
@@ -55,11 +57,12 @@ def delete_card(card_id: int):
 def edit_card(card_id: int):
     # getting card by id
     card = Card.query.get(card_id)
+    form = CardForm()
 
-    if request.method == "POST":
+    if request.method == "POST" and form.validate():
         # getting data from form
-        word = request.form.get("word")
-        context = request.form.get("context")
+        word = form.word.data
+        context = form.context.data
 
         # writing edited data
         card.word = word
@@ -71,7 +74,7 @@ def edit_card(card_id: int):
         # redirecting to index
         return redirect("/", code=302)
 
-    return render_template("edit_card.html", card=card)
+    return render_template("edit_card.html", card=card, form=form)
 
 
 @app.route("/signup", methods=["POST", "GET"])
