@@ -10,6 +10,15 @@
 	
 	<header>
 
+		{% if current_user.is_authenticated %}
+			Hi {{ current_user.username }}! <br>
+			<a href="{{ url_for('logout') }}">Log out</a>
+		{% else %}
+			You aren't authorized <br>
+			<a href="{{ url_for('login') }}">Login</a>
+			<a style="margin-left: 20px;" href="{{ url_for('signup') }}">Sign up</a>
+		{% endif %}
+
 		<ul>
 			<li><a href="{{ url_for('create_card') }}">Add card +</a></li>
 		</ul>

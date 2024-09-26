@@ -1,6 +1,7 @@
-from config import db, app
+from flask_login import UserMixin
 from sqlalchemy.ext.hybrid import hybrid_property
-from config import bcrypt
+
+from config import db, app, bcrypt, login_manager
 
 
 class Card(db.Model):
@@ -12,7 +13,7 @@ class Card(db.Model):
         return self.word
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -32,3 +33,8 @@ class User(db.Model):
     @password_hash.setter
     def password_hash(self, new_pass):
         self._password_hash = bcrypt.generate_password_hash(new_pass).decode("utf-8")
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
