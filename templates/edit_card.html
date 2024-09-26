@@ -7,8 +7,13 @@
 <h1>Edit</h1>
 
 <form method="POST">
-	<input type="text" name="word" value="{{ card.word }}"><br>
-	<textarea name="context" type="text">{{ card.context }}</textarea>
+	{{ form.hidden_tag() }}
+
+	{{ form.word.label }} <br>
+	{{ form.word }} <br>
+	{{ form.context.label }} <br>
+	{{ form.context }} <br>
+
 	<input type="submit" value="edit">
 </form>
 
