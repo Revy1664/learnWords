@@ -1,6 +1,6 @@
 import models
-from flask_login import login_user, logout_user, login_required
-from flask import render_template, request, redirect, url_for, flash
+from flask_login import login_user, logout_user, login_required, current_user
+from flask import render_template, request, redirect, url_for, flash, abort
 from flask_wtf.csrf import generate_csrf
 
 from config import app, db, bcrypt
@@ -42,7 +42,11 @@ def create_card():
 @login_required
 def delete_card(card_id: int):
     # getting card by id
-    card = Card.query.get(card_id)
+    card = Card.query.get_or_404(card_id)
+
+    # if current user didn't create a card, he can't delete it
+    if card.user.id != current_user.id:
+        abort(code=403)
 
     # deleting card from database and applying
     db.session.delete(card)
@@ -56,8 +60,12 @@ def delete_card(card_id: int):
 @login_required
 def edit_card(card_id: int):
     # getting card by id
-    card = Card.query.get(card_id)
+    card = Card.query.get_or_404(card_id)
     form = CardForm()
+
+    # if current user didn't create a card, he can't edit it
+    if card.user.id != current_user.id:
+        abort(code=403)
 
     if request.method == "POST" and form.validate():
         # getting data from form
