@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %} {{ card.word }} {% endblock title %}
+
+{% block content %}
+
+	Word: {{ card.word }} <br>
+	Context: {{ card.context }} <br>
+	Author: {{ card.user.username }} <br>
+
+{% endblock content %}

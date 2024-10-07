@@ -10,6 +10,7 @@ from forms import LoginForm, RegistrationForm, CardForm
 
 # ROUTES
 @app.route("/")
+@app.route("/cards")
 def index():
     # get all the cards from database
     cards = Card.query.order_by(Card.id.asc()).all()
@@ -83,6 +84,15 @@ def edit_card(card_id: int):
         return redirect("/", code=302)
 
     return render_template("edit_card.html", card=card, form=form)
+
+
+@app.route("/cards/<int:card_id>")
+@login_required
+def detail(card_id: int):
+    # get card data by id
+    card = Card.query.get_or_404(card_id)
+
+    return render_template("detail_card.html", card=card)
 
 
 @app.route("/signup", methods=["POST", "GET"])

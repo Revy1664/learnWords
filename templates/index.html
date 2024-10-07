@@ -8,15 +8,17 @@
 	
 	<table style="border: 1px solid black;">
 		<tr>
-			<th style="border: 1px solid black;">ID</th>
 			<th style="border: 1px solid black;">Word</th>
 			<th style="border: 1px solid black;">Context</th>
 			<th style="border: 1px solid black;">Author</th>
 		</tr>
 		{% for card in cards %}
 			<tr>
-				<td style="border: 1px solid black;">{{ card.id }}</td>
-				<td style="border: 1px solid black;">{{ card.word }}</td>
+				<td style="border: 1px solid black;">
+					<a href="{{ url_for('detail', card_id=card.id) }}">
+						{{ card.word }}
+					</a>
+				</td>
 				<td style="border: 1px solid black;">{{ card.context }}</td>
 				<td style="border: 1px solid black;">{{ card.user.username }}</td>
 				<td style="border: 1px solid black;"><a href="{{ url_for('delete_card', card_id=card.id) }}">Delete</a></td>
